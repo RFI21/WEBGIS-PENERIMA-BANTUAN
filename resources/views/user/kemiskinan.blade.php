@@ -99,50 +99,59 @@
                                 <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wider">PILIH Kecamatan
                                 </h3>
                                 <div class="grid grid-cols-2 gap-2 text-xs">
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('wara')">
-                                        Wara
-                                    </span>
+                                <span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="wara"
+      onclick="selectKecamatanByName('wara')">
+    Wara
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('wara-timur')">
-                                        Wara Timur
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="wara timur"
+      onclick="selectKecamatanByName('wara timur')">
+    Wara Timur
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('wara-barat')">
-                                        Wara Barat
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="wara barat"
+      onclick="selectKecamatanByName('wara barat')">
+    Wara Barat
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('wara-utara')">
-                                        Wara Utara
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="wara utara"
+      onclick="selectKecamatanByName('wara utara')">
+    Wara Utara
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('wara-selatan')">
-                                        Wara Selatan
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="wara selatan"
+      onclick="selectKecamatanByName('wara selatan')">
+    Wara Selatan
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('bara')">
-                                        Bara
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="bara"
+      onclick="selectKecamatanByName('bara')">
+    Bara
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('mungkajang')">
-                                        Mungkajang
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="mungkajang"
+      onclick="selectKecamatanByName('mungkajang')">
+    Mungkajang
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('sendana')">
-                                        Sendana
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="sendana"
+      onclick="selectKecamatanByName('sendana')">
+    Sendana
+</span>
 
-                                    <span class="bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-                                        onclick="zoomToSubdistrict('telluwanua')">
-                                        Telluwanua
-                                    </span>
+<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+      data-kec="telluwanua"
+      onclick="selectKecamatanByName('telluwanua')">
+    Telluwanua
+</span>
                                 </div>
                             </div>
 
@@ -386,6 +395,12 @@ function initGisMap(filterType = 'all') {
 
                         });
 
+                        layer.on('click', function () {
+                                layer.openPopup(); // pastikan popup tetap tampil
+                                setActiveKecamatan(namaKec);
+                                selectKecamatanByName(namaKec);
+                            });
+
                     }
 
                 }).addTo(mapInstance);
@@ -405,4 +420,66 @@ function initGisMap(filterType = 'all') {
 
 }
 
+</script>
+
+<script>
+ function selectKecamatanByName(namaKec) {
+
+    // cari data geojson
+    fetch("{{ asset('assets/js/kecamatan.geojson') }}")
+        .then(res => res.json())
+        .then(data => {
+
+            const feature = data.features.find(f =>
+                f.properties.nm_kecamatan.toLowerCase().trim() === namaKec.toLowerCase()
+            );
+
+            const nama = feature ? feature.properties.nm_kecamatan : namaKec;
+
+    
+
+            // 2. highlight sidebar
+            setActiveKecamatan(nama);
+
+            // 3. buka popup di map (INI YANG KAMU LUPA)
+            openPopupByName(nama);
+
+        });
+}
+</script>
+
+<script>
+    function setActiveKecamatan(nama) {
+
+    document.querySelectorAll('.kec-item').forEach(el => {
+        el.classList.remove('bg-emerald-200', 'font-bold');
+    });
+
+    const active = document.querySelector(`[data-kec="${nama.toLowerCase()}"]`);
+
+    if (active) {
+        active.classList.add('bg-emerald-200', 'font-bold');
+    }
+}
+</script>
+
+<script>
+    function openPopupByName(namaKec) {
+
+    if (!geojsonLayer) return;
+
+    geojsonLayer.eachLayer(function(layer) {
+
+        const name = layer.feature.properties.nm_kecamatan;
+
+        if (name === namaKec) {
+
+            layer.openPopup(); // 🔥 INI YANG MEMUNCULKAN POPUP
+
+            mapInstance.setView(layer.getBounds().getCenter(), 12);
+
+        }
+
+    });
+}
 </script>
