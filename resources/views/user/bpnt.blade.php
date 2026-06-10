@@ -96,65 +96,41 @@
                     <div class="w-full lg:w-1/4 h-[90vh] bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-6 flex flex-col justify-between overflow-y-auto">
                         <div class="space-y-6">
                            
-                            <div class="space-y-3">
-                                <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wider">PILIH Kecamatan
-                                </h3>
-                                <div class="grid grid-cols-2 gap-2 text-xs">
-                                 <span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="wara"
-      onclick="selectKecamatanByName('wara')">
-    Wara
-</span>
+ <div class="space-y-3">
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="wara timur"
-      onclick="selectKecamatanByName('wara timur')">
-    Wara Timur
-</span>
+    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wider">
+        Pilih Kecamatan
+    </h3>
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="wara barat"
-      onclick="selectKecamatanByName('wara barat')">
-    Wara Barat
-</span>
+    <select id="kecamatanSelect"
+            class="w-full p-2 border rounded-lg"
+            onchange="loadKelurahan()">
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="wara utara"
-      onclick="selectKecamatanByName('wara utara')">
-    Wara Utara
-</span>
+        <option value="">-- Pilih Kecamatan --</option>
+        <option value="Wara">Wara</option>
+        <option value="Wara Timur">Wara Timur</option>
+        <option value="Wara Barat">Wara Barat</option>
+        <option value="Wara Utara">Wara Utara</option>
+        <option value="Wara Selatan">Wara Selatan</option>
+        <option value="Bara">Bara</option>
+        <option value="Mungkajang">Mungkajang</option>
+        <option value="Sendana">Sendana</option>
+        <option value="Telluwanua">Telluwanua</option>
+    </select>
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="wara selatan"
-      onclick="selectKecamatanByName('wara selatan')">
-    Wara Selatan
-</span>
+</div>
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="bara"
-      onclick="selectKecamatanByName('bara')">
-    Bara
-</span>
+<div class="space-y-3 mt-4">
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="mungkajang"
-      onclick="selectKecamatanByName('mungkajang')">
-    Mungkajang
-</span>
+    <h3 class="font-bold text-sm text-slate-700 uppercase tracking-wider">
+        Kelurahan
+    </h3>
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="sendana"
-      onclick="selectKecamatanByName('sendana')">
-    Sendana
-</span>
+    <div id="kelurahanContainer"
+         class="grid grid-cols-2 gap-2 text-xs">
+    </div>
 
-<span class="kec-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
-      data-kec="telluwanua"
-      onclick="selectKecamatanByName('telluwanua')">
-    Telluwanua
-</span>
-                                </div>
-                            </div>
+</div>
 
 
                              <div>
@@ -163,19 +139,19 @@
 
     <h4
         class="text-xs font-bold text-slate-700 uppercase tracking-wide border-b border-slate-100 pb-3 mb-5">
-        Statistik BPNT Kecamatan
+        Statistik BPNT Kelurahan
     </h4>
 
-    <!-- Nama Kecamatan -->
+    <!-- Nama Kelurahan -->
     <div class="text-center mb-4">
 
-        <h3 id="namaKecamatan"
+        <h3 id="namaWilayah"
             class="text-lg font-bold text-emerald-700">
             -
         </h3>
 
         <p class="text-[11px] text-slate-400">
-            Klik wilayah kecamatan pada peta
+            Klik wilayah Kelurahan pada peta
         </p>
 
     </div>
@@ -190,7 +166,7 @@
             <div
                 class="absolute inset-5 bg-white rounded-full flex flex-col items-center justify-center text-center">
 
-                <span id="jumlahPkh"
+                <span id="jumlahBpnt"
                     class="text-2xl font-extrabold text-slate-800 transition-all duration-500">
                     -
                 </span>
@@ -218,7 +194,7 @@
                 </span>
             </div>
 
-            <span id="detailPkh"
+            <span id="detailBpnt"
                 class="text-xs font-bold text-slate-700">
                 -
             </span>
@@ -317,11 +293,10 @@ function initGisMap(filterType = 'all') {
         }).addTo(mapInstance);
 
         // data warna
-        const kecamatanColors =
-            @json($warnaKecamatan);
+        const kelurahanColors = @json($warnaKelurahan);
 
         // load geojson
-        fetch("{{ asset('assets/js/kecamatan.geojson') }}")
+        fetch("{{ asset('assets/js/Batas_Wilayah_KelurahanDesa_.json') }}")
 
             .then(response => response.json())
 
@@ -332,39 +307,46 @@ function initGisMap(filterType = 'all') {
                     // style polygon
                     style: function(feature) {
 
-                        const kec =
-                            feature.properties.nm_kecamatan?.trim();
+                    const kelurahan =
+                        feature.properties.WADMKD?.trim();
 
-                        return {
-                            color: '#ffffff',
-                            weight: 2,
-                            fillColor: kecamatanColors[kec]
-                                ? kecamatanColors[kec].warna
-                                : '#cbd5e1',
-                            fillOpacity: 0.5
-                        };
+                    return {
+                        color: '#ffffff',
+                        weight: 2,
+                        fillColor: kelurahanColors[kelurahan]
+                            ? kelurahanColors[kelurahan].warna
+                            : '#cbd5e1',
+                        fillOpacity: 0.5
+                    };
 
                     },
 
                     // event tiap feature
                     onEachFeature: function(feature, layer) {
 
-                        const namaKec =
-                            feature.properties.nm_kecamatan;
+                    const namaKel =
+                        feature.properties.WADMKD;
 
-                        const info =
-                            kecamatanColors[namaKec];
+                    const namaKec =
+                        feature.properties.WADMKC;
+
+                    const info =
+                        kelurahanColors[namaKel];
 
                         // popup
                         layer.bindPopup(`
                             <div class="text-sm">
 
                                 <h3 class="font-bold text-emerald-700 mb-2">
-                                    Kecamatan ${namaKec}
+                                    Kelurahan ${namaKel}
                                 </h3>
 
+                                <p class="text-xs text-slate-500 mb-2">
+                                    Kecamatan ${namaKec}
+                                </p>
+
                                 <div class="space-y-1 text-xs text-slate-600">
-                                    <p>Total PKH : ${info ? info.bpnt : 0}</p>
+                                    <p>Total BPNT : ${info ? info.bpnt : 0}</p>
                                     <p>Total Keluarga : ${info ? info.keluarga : 0}</p>
                                     <p>Persentase : ${info ? info.persen : 0}%</p>
                                     <p>Status : ${info ? info.status : '-'}</p>
@@ -392,10 +374,13 @@ function initGisMap(filterType = 'all') {
 
                         // click polygon
 layer.on('click', function () {
+        mapInstance.fitBounds(layer.getBounds(), {
+        padding: [30, 30]
+    });
     layer.openPopup(); // pastikan popup tetap tampil
-    updateChart(namaKec, info || null);
-    setActiveKecamatan(namaKec);
-    selectKecamatanByName(namaKec);
+    updateChart(namaKel, info || null);
+    setActiveKelurahan(namaKel);
+    selectKelurahanByName(namaKel);
 });
 
                     }
@@ -425,67 +410,82 @@ layer.on('click', function () {
 
 
 <script>
- function selectKecamatanByName(namaKec) {
+ function selectKelurahanByName(namaKel) {
 
-    // cari data geojson
-    fetch("{{ asset('assets/js/kecamatan.geojson') }}")
+    fetch("{{ asset('assets/js/Batas_Wilayah_KelurahanDesa_.json') }}")
         .then(res => res.json())
         .then(data => {
 
             const feature = data.features.find(f =>
-                f.properties.nm_kecamatan.toLowerCase().trim() === namaKec.toLowerCase()
+                f.properties.WADMKD.toLowerCase().trim() ===
+                namaKel.toLowerCase().trim()
             );
 
-            const kecamatanColors = @json($warnaKecamatan);
+            const kelurahanColors = @json($warnaKelurahan);
 
-            const info = feature ? kecamatanColors[feature.properties.nm_kecamatan] : null;
-            const nama = feature ? feature.properties.nm_kecamatan : namaKec;
+            const info = feature
+                ? kelurahanColors[feature.properties.WADMKD]
+                : null;
 
-            // 1. update chart
+            const nama = feature
+                ? feature.properties.WADMKD
+                : namaKel;
+
+            // update chart
             updateChart(nama, info);
 
-            // 2. highlight sidebar
-            setActiveKecamatan(nama);
+            // highlight sidebar
+            setActiveKelurahan(nama);
 
-            // 3. buka popup di map (INI YANG KAMU LUPA)
+            // buka popup
             openPopupByName(nama);
 
         });
+
 }
 </script>
 
 <script>
-    function openPopupByName(namaKec) {
+ function openPopupByName(namaKelurahan) {
 
     if (!geojsonLayer) return;
 
     geojsonLayer.eachLayer(function(layer) {
 
-        const name = layer.feature.properties.nm_kecamatan;
+        const name = layer.feature.properties.WADMKD;
 
-        if (name === namaKec) {
+        if (
+            name &&
+            name.toLowerCase().trim() ===
+            namaKelurahan.toLowerCase().trim()
+        ) {
 
-            layer.openPopup(); // 🔥 INI YANG MEMUNCULKAN POPUP
+            layer.openPopup();
 
-            mapInstance.setView(layer.getBounds().getCenter(), 12);
+            mapInstance.fitBounds(
+                layer.getBounds(),
+                { padding: [30, 30] }
+            );
 
         }
 
     });
+
 }
 </script>
 
 <script>
-   function updateChart(namaKec, info) {
+   function updateChart(namaKelurahan, info) {
 
-    // set nama kecamatan tetap muncul
-    document.getElementById('namaKecamatan').innerText = namaKec;
+    // set nama kelurahan  tetap muncul
+    document.getElementById('namaWilayah').innerText =
+    namaKelurahan;
 
     // kalau data kosong → RESET semua
     if (!info) {
 
-        animateValue('jumlahPkh', 0);
-        animateValue('detailPkh', 0);
+        animateValue('jumlahBpnt', 0);
+        animateValue('detailBpnt', 0);
         animateValue('detailKeluarga', 0);
 
         document.getElementById('detailPersen').innerText = '0%';
@@ -497,8 +497,8 @@ layer.on('click', function () {
     }
 
     // update angka
-    animateValue('jumlahPkh', info.bpnt || 0);
-    animateValue('detailPkh', info.bpnt || 0);
+    animateValue('jumlahBpnt', info.bpnt || 0);
+    animateValue('detailBpnt', info.bpnt || 0);
     animateValue('detailKeluarga', info.keluarga || 0);
 
     document.getElementById('detailPersen').innerText =
@@ -522,17 +522,32 @@ layer.on('click', function () {
 </script>
 
 <script>
-    function setActiveKecamatan(nama) {
+ function setActiveKelurahan(nama) {
 
-    document.querySelectorAll('.kec-item').forEach(el => {
-        el.classList.remove('bg-emerald-200', 'font-bold');
-    });
+    document.querySelectorAll('.kel-item')
+        .forEach(el => {
 
-    const active = document.querySelector(`[data-kec="${nama.toLowerCase()}"]`);
+            el.classList.remove(
+                'bg-emerald-200',
+                'font-bold'
+            );
+
+        });
+
+    const active =
+        document.querySelector(
+            `[data-kel="${nama.toLowerCase()}"]`
+        );
 
     if (active) {
-        active.classList.add('bg-emerald-200', 'font-bold');
+
+        active.classList.add(
+            'bg-emerald-200',
+            'font-bold'
+        );
+
     }
+
 }
 </script>
 
@@ -566,5 +581,53 @@ layer.on('click', function () {
         }
 
     }, duration / 40);
+}
+</script>
+
+
+<script>
+
+    let geojsonData = null;
+
+fetch("{{ asset('assets/js/Batas_Wilayah_KelurahanDesa_.json') }}")
+    .then(res => res.json())
+    .then(data => {
+
+        geojsonData = data;
+
+    });
+
+
+
+    function loadKelurahan() {
+
+    const kecamatan =
+        document.getElementById('kecamatanSelect').value;
+
+    const container =
+        document.getElementById('kelurahanContainer');
+
+    container.innerHTML = '';
+
+    if (!geojsonData || !kecamatan) return;
+
+    const kelurahan = geojsonData.features
+        .filter(f => f.properties.WADMKC === kecamatan)
+        .map(f => f.properties.WADMKD)
+        .sort();
+
+    kelurahan.forEach(nama => {
+
+            container.innerHTML += `
+            <span
+                class="kel-item bg-white border border-slate-200 p-2 rounded-lg text-center font-medium shadow-sm hover:border-brand-600 hover:bg-emerald-50 cursor-pointer transition"
+                data-kel="${nama.toLowerCase()}"
+                onclick="selectKelurahanByName('${nama}')">
+                ${nama}
+            </span>
+            `;
+
+    });
+
 }
 </script>

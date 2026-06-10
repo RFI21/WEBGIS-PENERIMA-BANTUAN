@@ -48,64 +48,64 @@ public function bpnt()
 {
     $bpnt = penerima::all();
 
+   // =========================
+    // REKAP PER KELURAHAN
     // =========================
-    // REKAP PER KECAMATAN
-    // =========================
-    $dataKecamatan = penerima::select(
+    $dataKelurahan = Penerima::select(
+            'kelurahan',
             'kecamatan',
             DB::raw('SUM(jumlah_bpnt) as total_bpnt'),
             DB::raw('SUM(jumlah_keluarga) as total_keluarga')
         )
-        ->groupBy('kecamatan')
+        ->groupBy('kelurahan', 'kecamatan')
         ->get();
 
     // =========================
-    // WARNA KECAMATAN
+    // WARNA KELURAHAN
     // =========================
-    $warnaKecamatan = [];
+    $warnaKelurahan = [];
 
-    foreach ($dataKecamatan as $item) {
+    foreach ($dataKelurahan as $item) {
 
         $persen = 0;
 
         if ($item->total_keluarga > 0) {
-
             $persen = (
-                $item->total_bpnt / $item->total_keluarga
+                $item->total_bpnt /
+                $item->total_keluarga
             ) * 100;
         }
 
-        // =========================
-        // KLASIFIKASI WARNA
-        // =========================
         if ($persen >= 80) {
 
-            $warna = '#16a34a'; // hijau
+            $warna = '#16a34a';
             $status = 'Tinggi / Merata';
 
         } elseif ($persen >= 50) {
 
-            $warna = '#facc15'; // kuning
+            $warna = '#facc15';
             $status = 'Sedang';
 
         } else {
 
-            $warna = '#dc2626'; // merah
+            $warna = '#dc2626';
             $status = 'Rendah / Tidak Merata';
         }
 
-        $warnaKecamatan[$item->kecamatan] = [
+        $warnaKelurahan[$item->kelurahan] = [
             'warna' => $warna,
             'persen' => round($persen, 1),
             'status' => $status,
             'bpnt' => $item->total_bpnt,
-            'keluarga' => $item->total_keluarga
+            'keluarga' => $item->total_keluarga,
+            'kecamatan' => $item->kecamatan
         ];
     }
 
+
     return view('user.bpnt', compact(
         'bpnt',
-        'warnaKecamatan'
+        'warnaKelurahan'
     ));
 }
 
@@ -115,64 +115,62 @@ public function pkh()
     $pkh = Penerima::all();
 
     // =========================
-    // REKAP PER KECAMATAN
+    // REKAP PER KELURAHAN
     // =========================
-    $dataKecamatan = Penerima::select(
+    $dataKelurahan = Penerima::select(
+            'kelurahan',
             'kecamatan',
             DB::raw('SUM(jumlah_pkh) as total_pkh'),
             DB::raw('SUM(jumlah_keluarga) as total_keluarga')
         )
-        ->groupBy('kecamatan')
+        ->groupBy('kelurahan', 'kecamatan')
         ->get();
 
     // =========================
-    // WARNA KECAMATAN
+    // WARNA KELURAHAN
     // =========================
-    $warnaKecamatan = [];
+    $warnaKelurahan = [];
 
-    foreach ($dataKecamatan as $item) {
+    foreach ($dataKelurahan as $item) {
 
         $persen = 0;
 
         if ($item->total_keluarga > 0) {
-
             $persen = (
-                $item->total_pkh / $item->total_keluarga
+                $item->total_pkh /
+                $item->total_keluarga
             ) * 100;
         }
 
-        // KLASIFIKASI WARNA
         if ($persen >= 80) {
 
-            $warna = '#16a34a'; // hijau
-
+            $warna = '#16a34a';
             $status = 'Tinggi / Merata';
 
         } elseif ($persen >= 50) {
 
-            $warna = '#facc15'; // kuning
-
+            $warna = '#facc15';
             $status = 'Sedang';
 
         } else {
 
-            $warna = '#dc2626'; // merah
-
+            $warna = '#dc2626';
             $status = 'Rendah / Tidak Merata';
         }
 
-        $warnaKecamatan[$item->kecamatan] = [
+        $warnaKelurahan[$item->kelurahan] = [
             'warna' => $warna,
             'persen' => round($persen, 1),
             'status' => $status,
             'pkh' => $item->total_pkh,
-            'keluarga' => $item->total_keluarga
+            'keluarga' => $item->total_keluarga,
+            'kecamatan' => $item->kecamatan
         ];
     }
 
     return view('user.pkh', compact(
         'pkh',
-        'warnaKecamatan'
+        'warnaKelurahan'
     ));
 }
 
