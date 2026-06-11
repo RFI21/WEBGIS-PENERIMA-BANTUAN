@@ -12,8 +12,59 @@
                 <!-- Main Analytics Chart (Bar Chart) -->
                 <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-md border border-slate-100">
                     <h3 class="text-base font-bold text-slate-800 mb-6 flex items-center gap-2">
-                        <i class="fa-solid fa-chart-simple text-emerald-600"></i> Sebaran Penerima Bantuan Sosial Per Kecamatan (KPM)
+                        <i class="fa-solid fa-chart-simple text-emerald-600"></i> 
+                            @if($kecamatan)
+                                Sebaran Penerima Bansos Kelurahan Kecamatan {{ $kecamatan }}
+                            @else
+                                Sebaran Penerima Bansos Per Kecamatan
+                            @endif
                     </h3>
+
+                    <div class="flex flex-wrap gap-3 mb-4">
+
+                        <form method="GET" class="flex flex-wrap gap-3">
+
+                            <select name="tahun"
+                                    class="border rounded-lg px-3 py-2">
+
+                                <option value="">
+                                    Semua Tahun
+                                </option>
+
+                                @foreach($tahunList as $item)
+                                    <option value="{{ $item }}"
+                                        {{ request('tahun') == $item ? 'selected' : '' }}>
+                                        {{ $item }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                            <select name="kecamatan"
+                                    class="border rounded-lg px-3 py-2">
+
+                                <option value="">
+                                    Semua Kecamatan
+                                </option>
+
+                                @foreach($kecamatanList as $item)
+                                    <option value="{{ $item }}"
+                                        {{ request('kecamatan') == $item ? 'selected' : '' }}>
+                                        {{ $item }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                            <button
+                                class="bg-emerald-600 text-white px-4 py-2 rounded-lg">
+                                Filter
+                            </button>
+
+                        </form>
+
+                    </div>
+
                     <div class="h-80 w-full relative">
                         <canvas id="rekapChart" class="w-full h-full"></canvas>
                     </div>
@@ -28,7 +79,7 @@
                                 Tren Penerima Bantuan 5 Tahun Terakhir
                             </h3>
 
-                            <div class="h-64 w-full relative">
+                            <div class="mt-10  h-64 w-full relative">
                                 <canvas id="ratioChart"></canvas>
                             </div>
                         </div>

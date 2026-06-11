@@ -174,66 +174,119 @@ public function pkh()
     ));
 }
 
- public function bansos()
+
+
+public function bansos(Request $request)
 {
-    // =========================
-    // BAR CHART KECAMATAN
-    // =========================
-    $data = penerima::select(
-            'kecamatan',
-            DB::raw('SUM(jumlah_pkh) as total_pkh'),
-            DB::raw('SUM(jumlah_bpnt) as total_bpnt')
-        )
-        ->groupBy('kecamatan')
-        ->get();
+    $tahun = $request->tahun;
+    $kecamatan = $request->kecamatan;
 
-    $labels = [
-        'Wara',
-        'Wara Timur',
-        'Wara Barat',
-        'Wara Utara',
-        'Wara Selatan',
-        'Bara',
-        'Sendana',
-        'Telluwanua',
-        'Mungkajang'
-    ];
+    $query = Penerima::query();
 
-    $pkhData = [];
-    $bpntData = [];
-
-    foreach ($labels as $kecamatan) {
-
-        $row = $data->firstWhere('kecamatan', $kecamatan);
-
-        $pkhData[] = $row ? $row->total_pkh : 0;
-        $bpntData[] = $row ? $row->total_bpnt : 0;
+    if ($tahun) {
+        $query->where('tahun', $tahun);
     }
 
+    // =====================================
+    // FILTER KECAMATAN → TAMPIL PER KELURAHAN
+    // =====================================
+    if ($kecamatan) {
+
+        $data = $query->select(
+                'kelurahan',
+                DB::raw('SUM(jumlah_pkh) as total_pkh'),
+                DB::raw('SUM(jumlah_bpnt) as total_bpnt')
+            )
+            ->where('kecamatan', $kecamatan)
+            ->groupBy('kelurahan')
+            ->get();
+
+        // Ambil semua kelurahan dari GeoJSON
+        $geojson = json_decode(
+            file_get_contents(
+                public_path('assets/js/Batas_Wilayah_KelurahanDesa_.json')
+            ),
+            true
+        );
+
+        $labels = [];
+
+        foreach ($geojson['features'] as $feature) {
+
+            if (
+                strtolower(trim($feature['properties']['WADMKC'])) ===
+                strtolower(trim($kecamatan))
+            ) {
+
+                $labels[] =
+                    trim($feature['properties']['WADMKD']);
+            }
+        }
+
+        $labels = array_unique($labels);
+        sort($labels);
+
+        $pkhData = [];
+        $bpntData = [];
+
+        foreach ($labels as $kelurahan) {
+
+            $row = $data->first(function ($item) use ($kelurahan) {
+                return strtolower(trim($item->kelurahan))
+                    === strtolower(trim($kelurahan));
+            });
+
+            $pkhData[] = $row ? (int) $row->total_pkh : 0;
+            $bpntData[] = $row ? (int) $row->total_bpnt : 0;
+        }
+
+    } else {
+
+        // =====================================
+        // TAMPIL PER KECAMATAN
+        // =====================================
+        $data = $query->select(
+                'kecamatan',
+                DB::raw('SUM(jumlah_pkh) as total_pkh'),
+                DB::raw('SUM(jumlah_bpnt) as total_bpnt')
+            )
+            ->groupBy('kecamatan')
+            ->orderBy('kecamatan')
+            ->get();
+
+        $labels = $data->pluck('kecamatan')->toArray();
+        $pkhData = $data->pluck('total_pkh')->toArray();
+        $bpntData = $data->pluck('total_bpnt')->toArray();
+    }
 
     // =========================
-    // LINE CHART TAHUN
+    // DATA FILTER
     // =========================
-    $tahunData = penerima::select(
+    $tahunList = Penerima::select('tahun')
+        ->distinct()
+        ->orderBy('tahun', 'desc')
+        ->pluck('tahun');
+
+    $kecamatanList = Penerima::select('kecamatan')
+        ->distinct()
+        ->orderBy('kecamatan')
+        ->pluck('kecamatan');
+
+    // =========================
+    // LINE CHART (TETAP)
+    // =========================
+    $tahunData = Penerima::select(
             'tahun',
             DB::raw('SUM(jumlah_pkh) as total_pkh'),
             DB::raw('SUM(jumlah_bpnt) as total_bpnt')
         )
         ->groupBy('tahun')
-        ->orderBy('tahun', 'asc')
+        ->orderBy('tahun')
         ->get();
 
-    $labelsTahun = [];
-    $pkhTahun = [];
-    $bpntTahun = [];
-
-    foreach ($tahunData as $item) {
-
-        $labelsTahun[] = $item->tahun;
-        $pkhTahun[] = $item->total_pkh;
-        $bpntTahun[] = $item->total_bpnt;
-    }
-
+    $labelsTahun = $tahunData->pluck('tahun')->toArray();
+    $pkhTahun = $tahunData->pluck('total_pkh')->toArray();
+    $bpntTahun = $tahunData->pluck('total_bpnt')->toArray();
 
     return view('user.bansos', compact(
         'labels',
@@ -241,7 +294,11 @@ public function pkh()
         'bpntData',
         'labelsTahun',
         'pkhTahun',
-        'bpntTahun'
+        'bpntTahun',
+        'tahunList',
+        'kecamatanList',
+        'tahun',
+        'kecamatan'
     ));
 }
 
