@@ -114,20 +114,41 @@
                         </thead>
                         <tbody id="recipientTableBody" class="divide-y divide-slate-100 text-base">
                             @forelse($penerimass as $i => $p)
-                        @php
-                            $persen = 0;
+@php
+    $persen = 0;
 
-                            if($p->jumlah_keluarga > 0){
-                                $persen = ($p->jumlah_pkh / $p->jumlah_keluarga) * 100;
-                            }
-                        @endphp
+    if($p->jumlah_keluarga > 0){
+        $persen = ($p->jumlah_pkh / $p->jumlah_keluarga) * 100;
+    }
+
+    if($persen <= 20){
+        $status = 'Sangat Rendah';
+        $class = 'bg-red-100 text-red-700';
+    }
+    elseif($persen <= 40){
+        $status = 'Rendah';
+        $class = 'bg-orange-100 text-orange-700';
+    }
+    elseif($persen <= 60){
+        $status = 'Sedang';
+        $class = 'bg-yellow-100 text-yellow-700';
+    }
+    elseif($persen <= 80){
+        $status = 'Tinggi';
+        $class = 'bg-blue-100 text-blue-700';
+    }
+    else{
+        $status = 'Sangat Tinggi';
+        $class = 'bg-emerald-100 text-emerald-700';
+    }
+@endphp
                         <tr class="text-center">
                             <td class="p-4">{{ $i+1 }}</td>
                             <td class="p-4">{{ $p->kecamatan }}</td>
                             <td class="p-4">{{ $p->kelurahan }}</td>
                             <td class="p-4">{{ $p->jumlah_pkh }}</td>
                             <td class="p-4">{{ $p->jumlah_keluarga }}</td>
-                            <td class="px-4 py-5">
+                            <!-- <td class="px-4 py-5">
 
                                 @if($persen >= 80)
 
@@ -143,6 +164,12 @@
 
                                 @endif
 
+                            </td> -->
+
+                            <td class="px-4 py-5">
+                                <span class="{{ $class }} px-3 py-1 rounded-full text-xs font-semibold">
+                                    {{ $status }}
+                                </span>
                             </td>
 
                             <!-- PERSEN -->
@@ -340,20 +367,41 @@
                         </thead>
                         <tbody id="recipientTableBody" class="divide-y divide-slate-100 text-base">
         @forelse($penerimas as $i => $p)
-                        @php
-                            $persen = 0;
+@php
+    $persen = 0;
 
-                            if($p->jumlah_keluarga > 0){
-                                $persen = ($p->jumlah_bpnt / $p->jumlah_keluarga) * 100;
-                            }
-                        @endphp
+    if($p->jumlah_keluarga > 0){
+        $persen = ($p->jumlah_pkh / $p->jumlah_keluarga) * 100;
+    }
+
+    if($persen <= 20){
+        $status = 'Sangat Rendah';
+        $class = 'bg-red-100 text-red-700';
+    }
+    elseif($persen <= 40){
+        $status = 'Rendah';
+        $class = 'bg-orange-100 text-orange-700';
+    }
+    elseif($persen <= 60){
+        $status = 'Sedang';
+        $class = 'bg-yellow-100 text-yellow-700';
+    }
+    elseif($persen <= 80){
+        $status = 'Tinggi';
+        $class = 'bg-blue-100 text-blue-700';
+    }
+    else{
+        $status = 'Sangat Tinggi';
+        $class = 'bg-emerald-100 text-emerald-700';
+    }
+@endphp
                         <tr class="text-center">
                             <td class="p-4">{{ $i+1 }}</td>
                             <td class="p-4">{{ $p->kecamatan }}</td>
                             <td class="p-4">{{ $p->kelurahan }}</td>
                             <td class="p-4">{{ $p->jumlah_bpnt }}</td>
                             <td class="p-4">{{ $p->jumlah_keluarga }}</td>
-                            <td class="px-4 py-5">
+                            <!-- <td class="px-4 py-5">
 
                                 @if($persen >= 80)
 
@@ -369,6 +417,12 @@
 
                                 @endif
 
+                            </td> -->
+
+                            <td class="px-4 py-5">
+                                <span class="{{ $class }} px-3 py-1 rounded-full text-xs font-semibold">
+                                    {{ $status }}
+                                </span>
                             </td>
 
                             <!-- PERSEN -->

@@ -63,6 +63,12 @@
                   </select>
                 </div>
 
+                <!-- Kelurahan (TAMBAHAN) -->
+                <div class="mb-3">
+                  <label class="form-label">Kelurahan</label>
+                  <input type="text" name="kelurahan" class="form-control" required>
+                </div>
+
               <!-- Desil -->
               <div class="mb-3">
                 <label class="form-label">Desil Kemiskinan</label>

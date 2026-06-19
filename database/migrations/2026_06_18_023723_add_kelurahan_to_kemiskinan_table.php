@@ -11,21 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::create('bansos', function (Blueprint $table) {
-
-        $table->id();
-
-        $table->string('rw');
-
-        $table->integer('pkh');
-
-        $table->integer('bpnt');
-        $table->integer('total');
-
-
-        $table->timestamps();
-
-    });
+Schema::table('kemiskinan', function (Blueprint $table) {
+    $table->string('kelurahan')->after('nama_kecamatan');
+});
     }
 
     /**
@@ -33,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('kemiskinan', function (Blueprint $table) {
+            //
+        });
     }
 };

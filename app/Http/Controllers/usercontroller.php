@@ -63,45 +63,54 @@ public function bpnt()
     // =========================
     // WARNA KELURAHAN
     // =========================
-    $warnaKelurahan = [];
+ $warnaKelurahan = [];
 
-    foreach ($dataKelurahan as $item) {
+foreach ($dataKelurahan as $item) {
 
-        $persen = 0;
+    $persen = 0;
 
-        if ($item->total_keluarga > 0) {
-            $persen = (
-                $item->total_bpnt /
-                $item->total_keluarga
-            ) * 100;
-        }
-
-        if ($persen >= 80) {
-
-            $warna = '#16a34a';
-            $status = 'Tinggi / Merata';
-
-        } elseif ($persen >= 50) {
-
-            $warna = '#facc15';
-            $status = 'Sedang';
-
-        } else {
-
-            $warna = '#dc2626';
-            $status = 'Rendah / Tidak Merata';
-        }
-
-        $warnaKelurahan[$item->kelurahan] = [
-            'warna' => $warna,
-            'persen' => round($persen, 1),
-            'status' => $status,
-            'bpnt' => $item->total_bpnt,
-            'keluarga' => $item->total_keluarga,
-            'kecamatan' => $item->kecamatan
-        ];
+    if ($item->total_keluarga > 0) {
+        $persen = (
+            $item->total_bpnt /
+            $item->total_keluarga
+        ) * 100;
     }
 
+    if ($persen <= 20) {
+
+        $warna = '#dc2626'; // Merah
+        $status = 'Sangat Rendah';
+
+    } elseif ($persen <= 40) {
+
+        $warna = '#f97316'; // Orange
+        $status = 'Rendah';
+
+    } elseif ($persen <= 60) {
+
+        $warna = '#facc15'; // Kuning
+        $status = 'Sedang';
+
+    } elseif ($persen <= 80) {
+
+        $warna = '#3b82f6'; // Biru
+        $status = 'Tinggi';
+
+    } else {
+
+        $warna = '#16a34a'; // Hijau
+        $status = 'Sangat Tinggi';
+    }
+
+    $warnaKelurahan[$item->kelurahan] = [
+        'warna' => $warna,
+        'persen' => round($persen, 1),
+        'status' => $status,
+        'bpnt' => $item->total_bpnt,
+        'keluarga' => $item->total_keluarga,
+        'kecamatan' => $item->kecamatan
+    ];
+}
 
     return view('user.bpnt', compact(
         'bpnt',
@@ -129,44 +138,54 @@ public function pkh()
     // =========================
     // WARNA KELURAHAN
     // =========================
-    $warnaKelurahan = [];
+ $warnaKelurahan = [];
 
-    foreach ($dataKelurahan as $item) {
+foreach ($dataKelurahan as $item) {
 
-        $persen = 0;
+    $persen = 0;
 
-        if ($item->total_keluarga > 0) {
-            $persen = (
-                $item->total_pkh /
-                $item->total_keluarga
-            ) * 100;
-        }
-
-        if ($persen >= 80) {
-
-            $warna = '#16a34a';
-            $status = 'Tinggi / Merata';
-
-        } elseif ($persen >= 50) {
-
-            $warna = '#facc15';
-            $status = 'Sedang';
-
-        } else {
-
-            $warna = '#dc2626';
-            $status = 'Rendah / Tidak Merata';
-        }
-
-        $warnaKelurahan[$item->kelurahan] = [
-            'warna' => $warna,
-            'persen' => round($persen, 1),
-            'status' => $status,
-            'pkh' => $item->total_pkh,
-            'keluarga' => $item->total_keluarga,
-            'kecamatan' => $item->kecamatan
-        ];
+    if ($item->total_keluarga > 0) {
+        $persen = (
+            $item->total_pkh /
+            $item->total_keluarga
+        ) * 100;
     }
+
+    if ($persen <= 20) {
+
+        $warna = '#dc2626'; // Merah
+        $status = 'Sangat Rendah';
+
+    } elseif ($persen <= 40) {
+
+        $warna = '#f97316'; // Orange
+        $status = 'Rendah';
+
+    } elseif ($persen <= 60) {
+
+        $warna = '#facc15'; // Kuning
+        $status = 'Sedang';
+
+    } elseif ($persen <= 80) {
+
+        $warna = '#3b82f6'; // Biru
+        $status = 'Tinggi';
+
+    } else {
+
+        $warna = '#16a34a'; // Hijau
+        $status = 'Sangat Tinggi';
+    }
+
+    $warnaKelurahan[$item->kelurahan] = [
+        'warna' => $warna,
+        'persen' => round($persen, 1),
+        'status' => $status,
+        'pkh' => $item->total_pkh,
+        'keluarga' => $item->total_keluarga,
+        'kecamatan' => $item->kecamatan
+    ];
+}
 
     return view('user.pkh', compact(
         'pkh',

@@ -34,20 +34,21 @@ class kemiskinanController extends Controller
      */
     public function store(Request $request)
     {
-       $request->validate([
+$request->validate([
     'nama_kecamatan' => 'required',
+    'kelurahan' => 'required', // TAMBAHAN
     'desil' => 'required',
     'jumlah_keluarga' => 'required|integer',
     'jumlah_jiwa' => 'required|integer',
-        ]);
+]);
 
-
-        kemiskinan::create([
-            'nama_kecamatan' => $request->nama_kecamatan,
-            'desil' => $request->desil,
-            'jumlah_keluarga' => $request->jumlah_keluarga,
-            'jumlah_jiwa' => $request->jumlah_jiwa,
-        ]);
+kemiskinan::create([
+    'nama_kecamatan' => $request->nama_kecamatan,
+    'kelurahan' => $request->kelurahan, // TAMBAHAN
+    'desil' => $request->desil,
+    'jumlah_keluarga' => $request->jumlah_keluarga,
+    'jumlah_jiwa' => $request->jumlah_jiwa,
+]);
 
         return redirect()->route('admin.kemiskinan')
             ->with('success', 'Data kemiskinan berhasil ditambahkan');
@@ -79,20 +80,21 @@ class kemiskinanController extends Controller
        
     $kemiskinan = kemiskinan::findOrFail($id);
 
-    $request->validate([
+$request->validate([
     'nama_kecamatan' => 'required',
+    'kelurahan' => 'required', // TAMBAHAN
     'desil' => 'required',
     'jumlah_keluarga' => 'required|integer',
     'jumlah_jiwa' => 'required|integer',
-    ]);
+]);
 
-
-    $kemiskinan->update([
-            'nama_kecamatan' => $request->nama_kecamatan,
-            'desil' => $request->desil,
-            'jumlah_keluarga' => $request->jumlah_keluarga,
-            'jumlah_jiwa' => $request->jumlah_jiwa,
-    ]);
+$kemiskinan->update([
+    'nama_kecamatan' => $request->nama_kecamatan,
+    'kelurahan' => $request->kelurahan, // TAMBAHAN
+    'desil' => $request->desil,
+    'jumlah_keluarga' => $request->jumlah_keluarga,
+    'jumlah_jiwa' => $request->jumlah_jiwa,
+]);
 
  
 

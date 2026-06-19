@@ -37,17 +37,32 @@
 
 <div class="space-y-3">
 
-    <!-- Tinggi -->
+    <!-- Sangat Tinggi -->
     <div class="flex items-center gap-3">
         <span class="w-4 h-4 rounded bg-[#16a34a] border border-white shadow"></span>
 
         <div>
             <p class="text-slate-700 font-semibold text-xs">
-                Tinggi / Merata
+                Sangat Tinggi
             </p>
 
             <p class="text-[10px] text-slate-500">
-                Persentase penerima ≥ 80%
+                Persentase penerima 81% - 100%
+            </p>
+        </div>
+    </div>
+
+    <!-- Tinggi -->
+    <div class="flex items-center gap-3">
+        <span class="w-4 h-4 rounded bg-[#3b82f6] border border-white shadow"></span>
+
+        <div>
+            <p class="text-slate-700 font-semibold text-xs">
+                Tinggi
+            </p>
+
+            <p class="text-[10px] text-slate-500">
+                Persentase penerima 61% - 80%
             </p>
         </div>
     </div>
@@ -62,22 +77,37 @@
             </p>
 
             <p class="text-[10px] text-slate-500">
-                Persentase penerima 50% - 79%
+                Persentase penerima 41% - 60%
             </p>
         </div>
     </div>
 
     <!-- Rendah -->
     <div class="flex items-center gap-3">
+        <span class="w-4 h-4 rounded bg-[#f97316] border border-white shadow"></span>
+
+        <div>
+            <p class="text-slate-700 font-semibold text-xs">
+                Rendah
+            </p>
+
+            <p class="text-[10px] text-slate-500">
+                Persentase penerima 21% - 40%
+            </p>
+        </div>
+    </div>
+
+    <!-- Sangat Rendah -->
+    <div class="flex items-center gap-3">
         <span class="w-4 h-4 rounded bg-[#dc2626] border border-white shadow"></span>
 
         <div>
             <p class="text-slate-700 font-semibold text-xs">
-                Rendah / Tidak Merata
+                Sangat Rendah
             </p>
 
             <p class="text-[10px] text-slate-500">
-                Persentase penerima &lt; 50%
+                Persentase penerima 0% - 20%
             </p>
         </div>
     </div>

@@ -51,6 +51,7 @@
         <tr>
           <th>No</th>
           <th>Nama Kecamatan</th>
+          <th>Kelurahan</th>
           <th>Desil</th>
           <th>Jumlah Keluarga</th>
           <th>Jumlah Jiwa</th>
@@ -66,6 +67,10 @@
 
             <td class="text-start">
               {{ $data->nama_kecamatan }}
+            </td>
+
+            <td>
+              {{ $data->kelurahan }}
             </td>
 
             <td>

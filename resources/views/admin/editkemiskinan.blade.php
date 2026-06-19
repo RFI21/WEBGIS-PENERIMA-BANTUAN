@@ -78,6 +78,16 @@ Form Edit Fasilitas
     </select>
 </div>
 
+<!-- Kelurahan -->
+<div class="mb-3">
+    <label class="form-label">Kelurahan</label>
+    <input type="text"
+        name="kelurahan"
+        class="form-control"
+        value="{{ $kemiskinan->kelurahan ?? '' }}"
+        required>
+</div>
+
 <!-- Desil -->
 <div class="mb-3">
     <label class="form-label">Desil</label>

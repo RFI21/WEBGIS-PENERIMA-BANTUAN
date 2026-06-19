@@ -11,6 +11,7 @@ class kemiskinan extends Model
 
     protected $fillable = [
         'nama_kecamatan',
+        'kelurahan',
         'desil',
         'jumlah_keluarga',
         'jumlah_jiwa',
